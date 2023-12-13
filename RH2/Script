@@ -1,0 +1,1079 @@
+local player = game.Players.LocalPlayer
+local rs = game:GetService("RunService")
+local Library = loadstring(game:HttpGet("https://raw.githubusercontent.com/JesterGH/Unpack/main/UI%20Lib/source"))()
+local gui = Library:create{
+    Theme = Library.Themes.Legacy
+}
+
+gui:set_status("Status | Loading")
+local part = Instance.new("Sound")
+part.Name = "SFX"
+part.SoundId = "rbxassetid://4628615547"
+part.Parent = workspace
+part:Play()
+wait(1)
+part:Destroy()
+
+gui:set_status("Status | Loading.")
+task.wait(0.2)
+gui:set_status("Status | Loading..")
+task.wait(0.2)
+gui:set_status("Status | Loading...")
+task.wait(0.2)
+
+local MovingShot = Instance.new('BoolValue', game.Players.LocalPlayer.Character)
+local StandingShot = Instance.new('BoolValue', game.Players.LocalPlayer.Character)
+local CloseLayup = Instance.new('BoolValue', game.Players.LocalPlayer.Character)
+local Layup = Instance.new('BoolValue', game.Players.LocalPlayer.Character)
+local DrivingDunk = Instance.new('BoolValue', game.Players.LocalPlayer.Character)
+local StandingDunk = Instance.new('BoolValue', game.Players.LocalPlayer.Character)
+
+local ReverseLayup = Instance.new('BoolValue', game.Players.LocalPlayer.Character)
+local Floater = Instance.new('BoolValue', game.Players.LocalPlayer.Character)
+local CloseHook = Instance.new('BoolValue', game.Players.LocalPlayer.Character)
+local Hook = Instance.new('BoolValue', game.Players.LocalPlayer.Character)
+local PostFade = Instance.new('BoolValue', game.Players.LocalPlayer.Character)
+local CloseFloater = Instance.new('BoolValue', game.Players.LocalPlayer.Character)
+local SideHook = Instance.new('BoolValue', game.Players.LocalPlayer.Character)
+
+getgenv().AutoTimeEnabled = false
+getgenv().Delays = {
+    MovingShotDelay = 0.012,
+    StandingShotDelay = 0.012,
+    CloseLayupDelay = 0.012,
+    LayupDelay = 0.012,
+    HookDelay = 0.012, 
+    FloaterDelay = 0.012, 
+    SideHookDelay = 0.012,  
+    CloseFloaterDelay = 0.012,  
+    PostFadeDelay = 0.012, 
+    ReverseLayupDelay = 0.012, 
+    CloseHookDelay = 0.012
+}
+
+getgenv().AutoDunkEnabled = false
+getgenv().PassedNumber = 0
+getgenv().AutoDunkSettings = {
+    DrivingDunkDelay = 0.015,
+    StandingDunkDelay = 0.015
+}
+
+local Players = game:GetService("Players")
+local UIS = game:GetService('UserInputService')
+local lp = Players.LocalPlayer
+
+getgenv().MultNumber = 2
+getgenv().Lagger = false
+
+local function GetClosestPlayer()
+    local target = nil
+    local distance = math.huge
+
+    for i,v in next, Players:GetPlayers() do
+        if v and v ~= lp and v.Character and v.Character:FindFirstChildOfClass('Humanoid') and v.Character:FindFirstChildOfClass('Humanoid').RootPart then
+            local plrdist = lp:DistanceFromCharacter(v.Character:FindFirstChildOfClass('Humanoid').RootPart.CFrame.p)
+            if plrdist < distance then
+                target = v
+                distance = plrdist
+            end
+        end
+    end
+
+    return target
+end
+
+game:GetService("RunService").RenderStepped:Connect(function()
+    if getgenv().Lagger then 
+        if getgenv().GaurdEnabled2 then
+            for i = 1,getgenv().MultNumber do 
+                local args = {
+                    [1] = true,
+                    [2] = "Defense",
+                    [3] = GetClosestPlayer()
+                }
+                    
+                game:GetService("Players").LocalPlayer.Backpack.PlayerEvents.Physical:FireServer(unpack(args))
+            end
+        end
+    end
+end)
+
+UIS.InputBegan:Connect(function(k, gpe)
+    if gpe then return end
+    if k.KeyCode == Enum.KeyCode.G then 
+        getgenv().GaurdEnabled2 = true  
+    end
+end)
+
+UIS.InputEnded:Connect(function(k, gpe)
+    if gpe then return end
+    if k.KeyCode == Enum.KeyCode.G then 
+        getgenv().GaurdEnabled2 = false  
+    end
+end)
+
+function WLCorrect()
+    local uise = gui:tab{
+        Icon = "rbxassetid://13469859345",
+        Name = "Visuals"
+    }
+
+    uise:toggle{
+        Name = "FE Invisible",
+        Description = 'Change player transparency state, other people can see this be careful.',
+        StartingState = false,
+        Callback = function(invis)
+            local Plrs = game:GetService("Players")
+            local MyPlr = Plrs.LocalPlayer
+            local MyChar = MyPlr.Character
+            if invis == true then
+                local args = {
+                    [1] = "Change Player State",
+                    [2] = "Invisible"
+                }
+
+                game:GetService("ReplicatedStorage").Remotes:FindFirstChild("Menu.RE"):FireServer(unpack(args))
+            else
+                local args = {
+                    [1] = "Change Player State",
+                    [2] = "Visible"
+                }
+
+                game:GetService("ReplicatedStorage").Remotes:FindFirstChild("Menu.RE"):FireServer(unpack(args))
+            end
+        end,
+    }
+
+    uise:toggle{
+        Name = "Screenshare Mode",
+        Description = 'Incase your need to hide the watermark for checks.',
+        StartingState = false,
+        Callback = function(screenshare)
+            local Plrs = game:GetService("Players")
+            local MyPlr = Plrs.LocalPlayer
+            local MyChar = MyPlr.Character
+            if screenshare == true then
+                game:GetService("CoreGui").watermark.edge.Visible = false
+            else
+                game:GetService("CoreGui").watermark.edge.Visible = true
+            end
+        end,
+    }
+
+    uise:toggle{
+        Name = "Hide Mobile UI",
+        Description = 'If Microsoft Store version of Roblox gives you this annoying UI, you can toggle it.',
+        StartingState = true,
+        Callback = function(mobile)
+            local Plrs = game:GetService("Players")
+            local MyPlr = Plrs.LocalPlayer
+            local MyChar = MyPlr.Character
+            if mobile == true then
+                MyPlr.PlayerGui.TouchGui.TouchControlFrame.Visible = false
+            else
+                MyPlr.PlayerGui.TouchGui.TouchControlFrame.Visible = true
+            end
+        end,
+    }
+
+uise:textbox({
+		Name = "Name Spoofer",
+		Placeholder = "Text Here",
+		Description = "This changes the name of all players.",
+		Callback = function(hasn31) 
+for i,v in next, game:GetDescendants() do 
+    if v:IsA('TextLabel') and v.Text:match(tostring(game.Players.LocalPlayer.Name)) then 
+        v.Text = hasn31
+    end 
+end
+end,
+})
+
+    local plyr = gui:tab{
+        Icon = "rbxassetid://2795572800",
+        Name = "Player"
+    }
+
+    function lagToggleAdd()
+        plyr:toggle{
+            Name = "Lag Contest",
+            Description = 'Lags the meter of ur opponent.',
+            StartingState = false,
+            Callback = function(LagContest)
+                getgenv().Lagger = LagContest
+            end,
+        }
+    end
+
+local lagKey = loadstring(game:HttpGet("https://raw.githubusercontent.com/RWOHidden/hwid/main/list.lua"))()
+local whitelistKey = _G.wl_key
+local whitelisted = true
+local chunkSize = 1
+print(whitelistKey)
+
+for i = 1, #lagKey, chunkSize do
+    local chunk = {}
+    for j = i, i + chunkSize - 1 do
+        if lagKey[j] then
+            table.insert(chunk, lagKey[j])
+        end
+    end
+
+    if table.find(chunk, whitelistKey) then
+        whitelisted = true
+        break
+    end
+end
+
+if whitelisted then
+    lagToggleAdd()
+    gui:prompt{Title = "Lag Defense Whitelist", Text = "Your whitelist has been found."}
+else
+  print("no lag meter access lol")
+end
+
+    plyr:button({
+        Name = "Soft Ball Mags",
+        Description = 'Increase range for ball pickup.',
+        Callback = function()
+        local Players = game:GetService("Players")
+local lp = Players.LocalPlayer
+
+function GetClosestBall()
+    local target = nil
+    local distance = math.huge
+
+    for i,v in next, game:GetService("Workspace").Balls:GetChildren() do
+        if v:IsA('MeshPart') then
+            local plrdist = lp:DistanceFromCharacter(v.CFrame.p)
+            if plrdist < distance then
+                target = v
+                distance = plrdist
+            end
+        end
+    end
+
+    return target
+end
+
+game:GetService("RunService").RenderStepped:Connect(function() 
+    firetouchinterest(GetClosestBall(), game.Players.LocalPlayer.Character.HumanoidRootPart, 1)
+    task.wait()
+    firetouchinterest(GetClosestBall(), game.Players.LocalPlayer.Character.HumanoidRootPart, 0)
+end)
+        end,
+    })
+
+    plyr:toggle{
+        Name = "Enhanced Dribble Creation Space",
+        Description = 'Make your dribble moves drag you further when using.',
+        StartingState = false,
+        Callback = function(dribbleENHC)
+            local multiplier = 1.21
+
+            if dribbleENHC == true then
+                game.Players.LocalPlayer.Character.HumanoidRootPart.DescendantAdded:Connect(function(v)
+                    if v:IsA('BodyVelocity') then
+                        v.Velocity = v.Velocity * multiplier
+                    end
+                end)
+            else
+                game.Players.LocalPlayer.Character.HumanoidRootPart.DescendantAdded:Connect(function(v)
+                    if v:IsA('BodyVelocity') then
+                        v.Velocity = v.Velocity / multiplier
+                    end
+                end)
+            end
+        end,
+    }
+
+    plyr:toggle{
+        Name = "Infinite Stamina",
+        Description = 'Prevent your player from running out of stamina while dribbling and sprinting.',
+        StartingState = false,
+        Callback = function(staminaINF)
+getgenv().StaminaEnabled = staminaINF
+local player = game.Players.LocalPlayer
+local character = player.Character
+local head = character.Head
+local sweat = head.Sweat
+sweat:Destroy()
+game.Players.LocalPlayer.Backpack.ActionValues.Stamina:GetPropertyChangedSignal("Value"):Connect(function() 
+    if getgenv().StaminaEnabled then
+        game.Players.LocalPlayer.Backpack.ActionValues.Stamina.Value = 95
+    else
+    end
+end)
+        end,
+    }
+
+    plyr:button({
+        Name = "Auto Guard v1.0",
+        Description = 'Hold "G" while in range',
+        Callback = function()
+            gui:prompt{Title = "Guard Warning", Text = "Smoothing and configuration is the next step currently in alpha phase."}
+            local UserInputService = game:GetService("UserInputService")
+            local Players = game:GetService("Players")
+            local LocalPlayer = Players.LocalPlayer
+            local Character = LocalPlayer.Character or LocalPlayer.CharacterAdded:Wait()
+            local Humanoid = Character:WaitForChild("Humanoid")
+
+            local targetBall = nil
+            local isGKeyPressed = false
+
+            local function hasBallConnect()
+                return Character:FindFirstChild("BallConnect") ~= nil
+            end
+
+            local function getClosestBall()
+                local balls = game:GetService("Workspace").Balls:GetChildren()
+                local closestBall = nil
+                local closestDistance = math.huge
+
+                for _, ball in ipairs(balls) do
+                    local distance = (LocalPlayer.Character.HumanoidRootPart.Position - ball.Position).Magnitude
+                    if distance <= 80 and distance < closestDistance then
+                        closestBall = ball
+                        closestDistance = distance
+                    end
+                end
+
+                return closestBall
+            end
+
+            local function walkToBall()
+                while isGKeyPressed and targetBall do
+                    local targetPosition = targetBall.Position
+                    local targetDirection = (targetPosition - LocalPlayer.Character.HumanoidRootPart.Position).Unit
+                    local targetDistance = 6
+
+                    local desiredPosition = targetPosition - targetDirection * targetDistance
+
+                    local currentDistance = (LocalPlayer.Character.HumanoidRootPart.Position - desiredPosition).Magnitude
+
+                    if currentDistance > 4 then
+                        Humanoid:MoveTo(desiredPosition)
+                    end
+
+                    wait()
+                end
+            end
+
+            UserInputService.InputBegan:Connect(function(input, isProcessed)
+                if input.KeyCode == Enum.KeyCode.G and not isProcessed and not hasBallConnect() then
+                    isGKeyPressed = true
+                    targetBall = getClosestBall()
+                end
+            end)
+
+            UserInputService.InputEnded:Connect(function(input, isProcessed)
+                if input.KeyCode == Enum.KeyCode.G and not isProcessed then
+                    isGKeyPressed = false
+                    targetBall = nil
+                end
+            end)
+
+            game:GetService("RunService").Heartbeat:Connect(function()
+                if targetBall then
+                    walkToBall()
+                end
+            end)
+        end,
+    })
+
+    
+
+    plyr:dropdown({
+        Name = "Player Walkspeed",
+        StartingText = "Walkspeed: 10",
+        Items = {
+            {"Walkspeed: 11", 11},
+            {"Walkspeed: 12", 12},
+            {"Walkspeed: 13", 13},
+            {"Walkspeed: 14", 14},
+            {"Walkspeed: 15", 15},
+            {"Walkspeed: 16", 16}
+        },
+        Description = "Bypasses walkspeed without kick.",
+        Callback = function(speednumber)
+            getgenv().speedchange = speednumber
+
+            local Plrs = game:GetService("Players")
+            local MyPlr = Plrs.LocalPlayer
+            local MyChar = MyPlr.Character
+
+            if MyChar then
+                local Hum = MyChar.Humanoid
+                Hum.Changed:connect(function()
+                    Hum.WalkSpeed = speedchange
+                end)
+                Hum.WalkSpeed = speedchange
+            end
+
+
+            MyPlr.CharacterAdded:connect(function(Char)
+                MyChar = Char
+                repeat wait() until Char:FindFirstChild("Humanoid")
+                local Hum = Char.Humanoid
+                Hum.Changed:connect(function()
+                    Hum.WalkSpeed = speedchange
+                end)
+                Hum.WalkSpeed = speedchange
+            end)
+            print(speedchange, "clicked")
+        end,
+    })
+
+
+
+    local aimbot = gui:tab{
+        Icon = "rbxassetid://11162755592",
+        Name = "Aimbot"
+    }
+
+    local oldAimbot = gui:tab{
+        Icon = "rbxassetid://11162755592",
+        Name = "Old Aimbot"
+    }
+
+    local autoAimbot = gui:tab{
+        Icon = "rbxassetid://11162755592",
+        Name = "Auto Configurating Aimbot"
+    }
+
+    oldAimbot:toggle{
+        Name = "Old Auto Release",
+        Description = 'Make sure to adjust your configuration for this before using.',
+        StartingState = false,
+        Callback = function(aimbott)
+                if aimbott then 
+                    gui:prompt{Title = "Aimbot Warning", Text = "This works for all meter types, make sure to adjust configuration or it won't work."}
+                end     
+        
+                _G.valshoot = 63
+                local UserInputService = game:GetService("UserInputService")
+                local Players = game:GetService("Players")
+                local player = Players.LocalPlayer
+                local bar = player.Backpack.ActionValues.Power
+        
+                local initialPower = bar.Value
+                local executed = false 
+        
+                local function onKeyPress(input)
+                    if input.KeyCode == Enum.KeyCode.E then
+                        if not executed and bar.Value >= _G.valshoot then
+                            executed = true 
+                            Players.LocalPlayer.Backpack.PlayerEvents.Shooting:FireServer(false, "Shooting", "Standing Shot")
+                            print("Shot released")
+                            wait(3)
+                            executed = false
+                        end
+                    end
+                end
+        
+                UserInputService.InputBegan:Connect(onKeyPress)
+        
+                bar:GetPropertyChangedSignal("Value"):Connect(function()
+                    if not executed and bar.Value >= _G.valshoot and UserInputService:IsKeyDown(Enum.KeyCode.E) then
+                        executed = true 
+                        Players.LocalPlayer.Backpack.PlayerEvents.Shooting:FireServer(false, "Shooting", "Standing Shot")
+                        print("Shot released")
+                        wait(3)
+                        executed = false
+                    end
+                end)
+        end,
+    }
+
+    autoAimbot:toggle{
+        Name = "Auto Configurating Aimbot",
+        Description = 'This is heavily work in progress.',
+        StartingState = false,
+        Callback = function(aimbot5)
+            getgenv().AutoAimbotEnabled = aimbot5
+        end,
+    }
+
+    oldAimbot:slider{
+        Name = "Delay",
+        Description = "Delay.",
+        Max = 102,
+        Min = 0,
+        Default = 63,
+        Callback = function(niggerConfig)
+            _G.valshoot = niggerConfig
+        end,
+    }
+
+    aimbot:toggle{
+        Name = "Auto Release",
+        Description = 'Make sure to adjust your configuration for this before using.',
+        StartingState = false,
+        Callback = function(aimbot)
+            getgenv().AutoTimeEnabled = aimbot
+        end,
+    }
+
+    aimbot:toggle{
+        Name = "Auto Dunk Release",
+        Description = 'Make sure to adjust your configuration for this before using.',
+        StartingState = false,
+        Callback = function(dunkAimbot)
+            getgenv().AutoDunkEnabled = dunkAimbot
+        end,
+    }
+
+    aimbot:slider{
+        Name = "Standing Shot Delay",
+        Description = "Standing Shot Delay.",
+        Max = 250,
+        Min = 0.01,
+        Default = 12,
+        Callback = function(JumpshotConfig)
+            getgenv().Delays.StandingShotDelay = JumpshotConfig / 1000
+        end,
+    }
+
+    aimbot:slider{
+        Name = "Moving Shot Delay",
+        Description = "Moving Shot Delay.",
+        Max = 250,
+        Min = 0.01,
+        Default = 12,
+        Callback = function(MovingShotConfig)
+            getgenv().Delays.MovingShotDelay = MovingShotConfig / 1000
+        end,
+    }
+
+    aimbot:slider{
+        Name = "Close Layup Delay",
+        Description = "Close Layup Delay.",
+        Max = 250,
+        Min = 0.01,
+        Default = 12,
+        Callback = function(CloseLayupConfig)
+            getgenv().Delays.CloseLayupDelay = CloseLayupConfig / 1000
+        end,
+    }
+
+    aimbot:slider{
+        Name = "Layup Delay",
+        Description = "Layup Delay.",
+        Max = 250,
+        Min = 0.01,
+        Default = 12,
+        Callback = function(LayupConfig)
+            getgenv().Delays.LayupDelay = LayupConfig / 1000
+        end,
+    }
+
+    aimbot:slider{
+        Name = "Driving Dunk Delay",
+        Description = "Driving Dunk Delay.",
+        Max = 200,
+        Min = 0.01,
+        Default = 15,
+        Callback = function(DrivingDunkConfig)
+            getgenv().AutoDunkSettings.DrivingDunkDelay = DrivingDunkConfig / 1000
+        end,
+    }
+
+    aimbot:slider{
+        Name = "Standing Dunk Delay",
+        Description = "Standing Dunk Delay.",
+        Max = 200,
+        Min = 0.015,
+        Default = 15,
+        Callback = function(StandingDunkConfig)
+            getgenv().AutoDunkSettings.StandingDunkDelay = StandingDunkConfig / 1000
+        end,
+    }
+
+    aimbot:slider{
+        Name = "Post Fade Delay",
+        Description = "Post Fade Delay.",
+        Max = 200,
+        Min = 0.015,
+        Default = 15,
+        Callback = function(PostFadeConfig)
+            getgenv().Delays.PostFadeDelay = PostFadeConfig / 1000
+        end,
+    }
+
+    aimbot:slider{
+        Name = "Side Hook Delay",
+        Description = "Side Hook Delay.",
+        Max = 200,
+        Min = 0.015,
+        Default = 15,
+        Callback = function(SideHookConfig)
+            getgenv().Delays.SideHookDelay = SideHookConfig / 1000
+        end,
+    }    
+
+    aimbot:slider{
+        Name = "Close Hook Delay",
+        Description = "Close Hook Delay.",
+        Max = 200,
+        Min = 0.015,
+        Default = 15,
+        Callback = function(CloseHookConfig)
+            getgenv().Delays.CloseHookDelay = CloseHookConfig / 1000
+        end,
+    }      
+    
+    aimbot:slider{
+        Name = "Post Hook Delay",
+        Description = "Post Hook Delay.",
+        Max = 200,
+        Min = 0.015,
+        Default = 15,
+        Callback = function(PostHookConfig)
+            getgenv().Delays.HookDelay = PostHookConfig / 1000
+        end,
+    }       
+
+    aimbot:slider{
+        Name = "Reverse Layup Delay",
+        Description = "Reverse Layup Delay.",
+        Max = 200,
+        Min = 0.015,
+        Default = 15,
+        Callback = function(ReverseLayupConfig)
+            getgenv().Delays.ReverseLayupDelay = ReverseLayupConfig / 1000
+        end,
+    }      
+
+    aimbot:slider{
+        Name = "Floater Delay",
+        Description = "Floater Delay.",
+        Max = 200,
+        Min = 0.015,
+        Default = 15,
+        Callback = function(FloaterConfig)
+            getgenv().Delays.FloaterDelay = FloaterConfig / 1000
+        end,
+    }    
+
+    aimbot:slider{
+        Name = "Close Floater Delay",
+        Description = "Close Floater Delay.",
+        Max = 200,
+        Min = 0.015,
+        Default = 15,
+        Callback = function(CloseFloaterConfig)
+            getgenv().Delays.CloseFloaterDelay = CloseFloaterConfig / 1000
+        end,
+    }       
+
+aimbot:dropdown({
+    Name = "Player Shotmeter Type",
+    StartingText = currentshotType,
+    Items = {
+{"Vertical Bar", "Vertical Bar"},
+{"Overhead", "Overhead"},
+{"On Floor", "On Floor"},
+{"Off", "Off"}
+    },
+    Description = "Change your shotmeter type more easily.",
+    Callback = function(shotTYPE)
+local args = {
+    [1] = "Change Settings Request",
+    [2] = "ShotmeterType",
+    [3] = shotTYPE
+}
+
+game:GetService("ReplicatedStorage").Remotes:FindFirstChild("Menu.RE"):FireServer(unpack(args))
+        print(shotTYPE, "clicked")
+    end,
+})
+
+    local Plrs = game:GetService("Players")
+    local MyPlr = Plrs.LocalPlayer
+
+end
+
+MovingShot:GetPropertyChangedSignal("Value"):Connect(function()
+    if getgenv().AutoTimeEnabled then
+        if MovingShot.Value == true then
+            repeat 
+                task.wait() 
+            until game.Players.LocalPlayer.Backpack.ActionValues.Power.Value >= 54
+            task.wait(getgenv().Delays.MovingShotDelay)
+
+            local args = {
+                [1] = false,
+                [2] = "Shooting",
+                [3] = "Moving Shot"
+            }
+
+            game:GetService("Players").LocalPlayer.Backpack.PlayerEvents.Shooting:FireServer(unpack(args))
+
+            MovingShot.Value = false
+        end
+    elseif getgenv().AutoAimbotEnabled then 
+
+        task.wait(0.7072)
+
+        local args = {
+            [1] = false,
+            [2] = "Shooting",
+            [3] = "Moving Shot"
+        }
+
+        game:GetService("Players").LocalPlayer.Backpack.PlayerEvents.Shooting:FireServer(unpack(args))
+
+        MovingShot.Value = false
+    else 
+        MovingShot.Value = false
+    end
+end)
+
+StandingShot:GetPropertyChangedSignal("Value"):Connect(function()
+    if getgenv().AutoTimeEnabled then
+        if StandingShot.Value == true then
+            repeat 
+                task.wait() 
+            until game.Players.LocalPlayer.Backpack.ActionValues.Power.Value >= 54
+            task.wait(getgenv().Delays.StandingShotDelay)
+
+            local args = {
+                [1] = false,
+                [2] = "Shooting",
+                [3] = "Standing Shot"
+            }
+
+            game:GetService("Players").LocalPlayer.Backpack.PlayerEvents.Shooting:FireServer(unpack(args))
+
+            StandingShot.Value = false
+        end
+    elseif getgenv().AutoAimbotEnabled then 
+
+        task.wait(0.58609485)
+    
+        local args = {
+            [1] = false,
+            [2] = "Shooting",
+            [3] = "Standing Shot"
+        }
+    
+        game:GetService("Players").LocalPlayer.Backpack.PlayerEvents.Shooting:FireServer(unpack(args))
+    
+        StandingShot.Value = false        
+    else
+        StandingShot.Value = false
+    end
+end)
+
+Layup:GetPropertyChangedSignal("Value"):Connect(function()
+    if getgenv().AutoTimeEnabled then
+        if Layup.Value == true then
+            repeat 
+                task.wait() 
+            until game.Players.LocalPlayer.Backpack.ActionValues.Power.Value >= 54
+            task.wait(getgenv().Delays.LayupDelay)
+
+            local args = {
+                [1] = false,
+                [2] = "Shooting",
+                [3] = "Layup"
+            }
+
+            game:GetService("Players").LocalPlayer.Backpack.PlayerEvents.Shooting:FireServer(unpack(args))
+
+            Layup.Value = false
+        end
+    else
+        Layup.Value = false
+    end
+end)
+
+CloseLayup:GetPropertyChangedSignal("Value"):Connect(function()
+    if getgenv().AutoTimeEnabled then
+        if CloseLayup.Value == true then
+            repeat 
+                task.wait() 
+            until game.Players.LocalPlayer.Backpack.ActionValues.Power.Value >= 54
+            task.wait(getgenv().Delays.CloseLayupDelay)
+
+            local args = {
+                [1] = false,
+                [2] = "Shooting",
+                [3] = "Close Layup"
+            }
+
+            game:GetService("Players").LocalPlayer.Backpack.PlayerEvents.Shooting:FireServer(unpack(args))
+
+            CloseLayup.Value = false
+        end
+    else
+        CloseLayup.Value = false
+    end
+end)
+
+DrivingDunk:GetPropertyChangedSignal("Value"):Connect(function()
+    if getgenv().AutoDunkEnabled then
+        if DrivingDunk.Value == true then
+            repeat 
+                task.wait() 
+            until game.Players.LocalPlayer.Backpack.ActionValues.Power.Value >= 54
+            task.wait(getgenv().AutoDunkSettings.DrivingDunkDelay)
+
+            local args = {
+                [1] = false,
+                [2] = "Moving Dunk",
+                [3] = getgenv().PassedNumber
+            }
+
+            game:GetService("Players").LocalPlayer.Backpack.PlayerEvents.Shooting:FireServer(unpack(args))
+
+            DrivingDunk.Value = false
+        end
+    else
+        DrivingDunk.Value = false
+    end
+end)
+
+StandingDunk:GetPropertyChangedSignal("Value"):Connect(function()
+    if getgenv().AutoDunkEnabled then
+        if StandingDunk.Value == true then
+            repeat 
+                task.wait() 
+            until game.Players.LocalPlayer.Backpack.ActionValues.Power.Value >= 54
+            task.wait(getgenv().AutoDunkSettings.StandingDunkDelay)
+
+            local args = {
+                [1] = false,
+                [2] = "Standing Dunk",
+                [3] = getgenv().PassedNumber
+            }
+
+            game:GetService("Players").LocalPlayer.Backpack.PlayerEvents.Shooting:FireServer(unpack(args))
+
+            StandingDunk.Value = false
+        end
+    else
+        StandingDunk.Value = false
+    end
+end)
+
+Hook:GetPropertyChangedSignal("Value"):Connect(function() 
+    if getgenv().AutoTimeEnabled then 
+        if Hook.Value == true then 
+            repeat 
+                task.wait() 
+            until game.Players.LocalPlayer.Backpack.ActionValues.Power.Value >= 54
+            task.wait(getgenv().Delays.HookDelay)
+
+            local args = {
+                [1] = false,
+                [2] = "Shooting",
+                [3] = "Post Hook"
+            }
+
+            game:GetService("Players").LocalPlayer.Backpack.PlayerEvents.Shooting:FireServer(unpack(args))
+
+            Hook.Value = false
+        end 
+    else 
+        Hook.Value = false
+    end 
+end)
+
+SideHook:GetPropertyChangedSignal("Value"):Connect(function() 
+    if getgenv().AutoTimeEnabled then 
+        if SideHook.Value == true then 
+            repeat 
+                task.wait() 
+            until game.Players.LocalPlayer.Backpack.ActionValues.Power.Value >= 54
+            task.wait(getgenv().Delays.SideHookDelay)
+
+            local args = {
+                [1] = false,
+                [2] = "Shooting",
+                [3] = "Side Post Hook",
+                [4] = getgenv().Side
+            }
+    
+            game:GetService("Players").LocalPlayer.Backpack.PlayerEvents.Shooting:FireServer(unpack(args))
+
+            SideHook.Value = false
+        end 
+    else 
+        SideHook.Value = false
+    end 
+end)
+
+CloseHook:GetPropertyChangedSignal("Value"):Connect(function() 
+    if getgenv().AutoTimeEnabled then 
+        if CloseHook.Value == true then 
+            repeat 
+                task.wait() 
+            until game.Players.LocalPlayer.Backpack.ActionValues.Power.Value >= 54
+            task.wait(getgenv().Delays.CloseHookDelay)
+
+            local args = {
+                [1] = false,
+                [2] = "Shooting",
+                [3] = "Close Post Hook"
+            }
+    
+            game:GetService("Players").LocalPlayer.Backpack.PlayerEvents.Shooting:FireServer(unpack(args))
+
+            CloseHook.Value = false
+        end 
+    else 
+        CloseHook.Value = false
+    end 
+end)
+
+Floater:GetPropertyChangedSignal("Value"):Connect(function() 
+    if getgenv().AutoTimeEnabled then 
+        if Floater.Value == true then 
+            repeat 
+                task.wait() 
+            until game.Players.LocalPlayer.Backpack.ActionValues.Power.Value >= 54
+            task.wait(getgenv().Delays.FloaterDelay)
+
+            local args = {
+                [1] = false,
+                [2] = "Shooting",
+                [3] = "Floater"
+            }
+
+            game:GetService("Players").LocalPlayer.Backpack.PlayerEvents.Shooting:FireServer(unpack(args))
+
+            Floater.Value = false
+        end 
+    else 
+        Floater.Value = false
+    end 
+end)
+
+CloseFloater:GetPropertyChangedSignal("Value"):Connect(function() 
+    if getgenv().AutoTimeEnabled then 
+        if CloseFloater.Value == true then 
+            repeat 
+                task.wait() 
+            until game.Players.LocalPlayer.Backpack.ActionValues.Power.Value >= 54
+            task.wait(getgenv().Delays.CloseFloaterDelay)
+
+            local args = {
+                [1] = false,
+                [2] = "Shooting",
+                [3] = "Close Floater"
+            }
+
+            game:GetService("Players").LocalPlayer.Backpack.PlayerEvents.Shooting:FireServer(unpack(args))
+
+            CloseFloater.Value = false
+        end 
+    else 
+        CloseFloater.Value = false
+    end 
+end)
+
+ReverseLayup:GetPropertyChangedSignal("Value"):Connect(function() 
+    if getgenv().AutoTimeEnabled then 
+        if ReverseLayup.Value == true then 
+            repeat 
+                task.wait() 
+            until game.Players.LocalPlayer.Backpack.ActionValues.Power.Value >= 54
+            task.wait(getgenv().Delays.ReverseLayupDelay)
+
+            local args = {
+                [1] = false,
+                [2] = "Shooting",
+                [3] = "Reverse Layup"
+            }
+
+            game:GetService("Players").LocalPlayer.Backpack.PlayerEvents.Shooting:FireServer(unpack(args))
+
+            ReverseLayup.Value = false
+        end 
+    else 
+        ReverseLayup.Value = false
+    end 
+end)
+
+PostFade:GetPropertyChangedSignal("Value"):Connect(function() 
+    if getgenv().AutoTimeEnabled then 
+        if PostFade.Value == true then 
+            repeat 
+                task.wait() 
+            until game.Players.LocalPlayer.Backpack.ActionValues.Power.Value >= 54
+            task.wait(getgenv().Delays.PostFadeDelay)
+
+            local args = {
+                [1] = false,
+                [2] = "Shooting",
+                [3] = "Post Fade"
+            }
+
+            game:GetService("Players").LocalPlayer.Backpack.PlayerEvents.Shooting:FireServer(unpack(args))
+
+            PostFade.Value = false
+        end 
+    else 
+        PostFade.Value = false
+    end 
+end)
+
+local HookMt;
+HookMt = hookmetamethod(game, "__namecall", newcclosure(function(self, ...)
+
+        local Args = {...}
+
+        if getnamecallmethod() == "FireServer" and self.Name == "Shooting" and Args[3] == "Moving Shot" and Args[1] == true then
+            MovingShot.Value = true
+            return HookMt(self, table.unpack(Args))
+        elseif getnamecallmethod() == "FireServer" and self.Name == "Shooting" and Args[3] == "Standing Shot" and Args[1] == true then
+            StandingShot.Value = true
+            return HookMt(self, table.unpack(Args))
+        elseif getnamecallmethod() == "FireServer" and self.Name == "Shooting" and Args[3] == "Close Layup" and Args[1] == true then
+            CloseLayup.Value = true
+            return HookMt(self, table.unpack(Args))
+        elseif getnamecallmethod() == "FireServer" and self.Name == "Shooting" and Args[3] == "Layup" and Args[1] == true then
+            Layup.Value = true
+            return HookMt(self, table.unpack(Args))
+        elseif getnamecallmethod() == "FireServer" and self.Name == "Shooting" and Args[2] == "Standing Dunk" and Args[1] == true then
+            getgenv().PassedNumber = Args[3]
+            StandingDunk.Value = true
+            return HookMt(self, table.unpack(Args))
+        elseif getnamecallmethod() == "FireServer" and self.Name == "Shooting" and Args[2] == "Moving Dunk" and Args[1] == true then
+            getgenv().PassedNumber = Args[3]
+            DrivingDunk.Value = true
+            return HookMt(self, table.unpack(Args))
+        elseif getnamecallmethod() == "FireServer" and self.Name == "Shooting" and Args[3] == "Post Hook" and Args[1] == true then
+            Hook.Value = true
+            return HookMt(self, table.unpack(Args))    
+        elseif getnamecallmethod() == "FireServer" and self.Name == "Shooting" and Args[3] == "Side Post Hook" and Args[1] == true then
+            getgenv().Side = Args[4]
+            SideHook.Value = true
+            return HookMt(self, table.unpack(Args))      
+        elseif getnamecallmethod() == "FireServer" and self.Name == "Shooting" and Args[3] == "Close Post Hook" and Args[1] == true then
+            CloseHook.Value = true
+            return HookMt(self, table.unpack(Args))      
+        elseif getnamecallmethod() == "FireServer" and self.Name == "Shooting" and Args[3] == "Close Post Hook" and Args[1] == true then
+            CloseHook.Value = true
+            return HookMt(self, table.unpack(Args))     
+        elseif getnamecallmethod() == "FireServer" and self.Name == "Shooting" and Args[3] == "Floater" and Args[1] == true then
+            Floater.Value = true
+            return HookMt(self, table.unpack(Args))  
+        elseif getnamecallmethod() == "FireServer" and self.Name == "Shooting" and Args[3] == "Close Floater" and Args[1] == true then
+            CloseFloater.Value = true
+            return HookMt(self, table.unpack(Args))       
+        elseif getnamecallmethod() == "FireServer" and self.Name == "Shooting" and Args[3] == "Reverse Layup" and Args[1] == true then
+            ReverseLayup.Value = true
+            return HookMt(self, table.unpack(Args))             
+        elseif getnamecallmethod() == "FireServer" and self.Name == "Shooting" and Args[3] == "Post Fade" and Args[1] == true then
+            PostFade.Value = true
+            return HookMt(self, table.unpack(Args))                                                                                               
+        end
+
+        return HookMt(self, table.unpack(Args))
+
+end))
+
+WLCorrect()
+gui:set_status("Status | Unlocked")

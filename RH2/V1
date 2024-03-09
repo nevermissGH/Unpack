@@ -1,6 +1,6 @@
 local player = game.Players.LocalPlayer
 local rs = game:GetService("RunService")
-local Library = loadstring(game:HttpGet("https://raw.githubusercontent.com/nevermissGH/Unpack/main/UI%20Lib/src"))()
+local Library = loadstring(game:HttpGet("https://raw.githubusercontent.com/nevermissGH/Unpack/main/UI"))()
 local gui = Library:create{
     Theme = Library.Themes.Legacy
 }

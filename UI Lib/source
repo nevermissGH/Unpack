@@ -1,17 +1,17 @@
 -- hashnine ui lib rewritten with permission
 
-local library = loadstring(game:HttpGet("https://raw.githubusercontent.com/JesterGH/Unpack/main/docs"))()
+local library = loadstring(game:HttpGet("https://raw.githubusercontent.com/nevermissGH/Unpack/main/docs"))()
 
 
 local Notif = library:InitNotifications()
 
 for i = 0,0,-1 do 
     task.wait(0.05)
-    local Loadinghash = Notif:Notify("Loading Jester v2, please be patient.", 3, "information") -- notification, alert, error, success, information
+    local Loadinghash = Notif:Notify("Loading nevermiss.cc v2, please be patient.", 3, "information") -- notification, alert, error, success, information
 end 
 
-local Wm = library:Watermark("Jester | v" .. library.version ..  " | " .. library:GetUsername())
-library.title = "Jester"
+local Wm = library:Watermark("nevermiss.cc | v" .. library.version ..  " | " .. library:GetUsername())
+library.title = "nevermiss.cc"
 
 library:Introduction()
 
@@ -417,14 +417,14 @@ function Library:create(options)
 	}
 
 	if readfile and writefile and isfile then
-		if not isfile("JesterSettings.json") then
-			writefile("JesterSettings.json", HTTPService:JSONEncode(settings))
+		if not isfile("nevermiss.ccSettings.json") then
+			writefile("nevermiss.ccSettings.json", HTTPService:JSONEncode(settings))
 		end
-		settings = HTTPService:JSONDecode(readfile("JesterSettings.json"))
+		settings = HTTPService:JSONDecode(readfile("nevermiss.ccSettings.json"))
 		Library.CurrentTheme = Library.Themes[settings.Theme]
 		updateSettings = function(property, value)
 			settings[property] = value
-			writefile("JesterSettings.json", HTTPService:JSONEncode(settings))
+			writefile("nevermiss.ccSettings.json", HTTPService:JSONEncode(settings))
 		end
 	end
 
@@ -432,12 +432,12 @@ function Library:create(options)
 		Name = "Home",
 		Size = UDim2.fromOffset(600, 400),
 		Theme = self.Themes[settings.Theme],
-		Link = "Jester"
+		Link = "nevermiss.cc"
 	}, options)
 
-	if getgenv and getgenv().JesterUI then
-		getgenv():JesterUI()
-		getgenv().JesterUI = nil
+	if getgenv and getgenv().nevermiss.ccUI then
+		getgenv():nevermiss.ccUI()
+		getgenv().nevermiss.ccUI = nil
 	end
 
 
@@ -586,7 +586,7 @@ function Library:create(options)
 	end
 
 	if getgenv then
-		getgenv().JesterUI = closeUI
+		getgenv().nevermiss.ccUI = closeUI
 	end
 
 	closeButton.MouseButton1Click:connect(function()
@@ -905,8 +905,8 @@ function Library:create(options)
 
 	rawset(mt, "creditsContainer", creditsTab.container)
 
-	creditsTab:credit{Name = "splash", Description = "Jester developer", Github = "https://github.com/Jester", Youtube = "https://www.youtube.com/channel/UCcupr0pKcZqUL07f37B5CWg"}
-	creditsTab:credit{Name = "percwalkk", Description = "Jester scripter", Discord = "percwalkk#0900", Youtube = "https://www.youtube.com/channel/UCBTELs5USLK_Z6aIC_rLCbA"}
+	creditsTab:credit{Name = "splash", Description = "nevermiss.cc developer", Github = "https://github.com/nevermiss.cc", Youtube = "https://www.youtube.com/channel/UCcupr0pKcZqUL07f37B5CWg"}
+	creditsTab:credit{Name = "percwalkk", Description = "nevermiss.cc scripter", Discord = "percwalkk#0900", Youtube = "https://www.youtube.com/channel/UCBTELs5USLK_Z6aIC_rLCbA"}
 
 	return mt
 end

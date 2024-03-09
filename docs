@@ -385,7 +385,7 @@ end
 
 local library = {
     version = "2.1.3",
-    title = title or "nevermiss.cc " .. tostring(math.random(1,366)),
+    title = title or "hashnine " .. tostring(math.random(1,366)),
     fps = 0,
     rank = "private"
 }
@@ -507,7 +507,7 @@ function library:Watermark(text)
         end
     end
 
-    tetx = text or "nevermiss.cc v1"
+    tetx = text or "hashnine v2"
 
     local watermark = Instance.new("ScreenGui")
     local watermarkPadding = Instance.new("UIPadding")
@@ -631,7 +631,7 @@ function library:Watermark(text)
 
     local WatermarkFunctions = {}
     function WatermarkFunctions:AddWatermark(text)
-        tetx = text or "nevermiss.cc v2"
+        tetx = text or "hashnine v2"
 
         local edge = Instance.new("Frame")
         local edgeCorner = Instance.new("UICorner")
@@ -997,9 +997,9 @@ function library:Introduction()
     local bar = Instance.new("Frame")
     local barCorner = Instance.new("UICorner")
     local barLayout = Instance.new("UIListLayout")
-    local nevermiss.ccLogo = Instance.new("ImageLabel")
+    local hashnineLogo = Instance.new("ImageLabel")
     local hashLogo = Instance.new("ImageLabel")
-    local nevermiss.cc = Instance.new("TextLabel")
+    local hashnine = Instance.new("TextLabel")
     local text = Instance.new("TextLabel")
     local pageLayout = Instance.new("UIListLayout")
     
@@ -1055,17 +1055,17 @@ function library:Introduction()
     barLayout.HorizontalAlignment = Enum.HorizontalAlignment.Center
     barLayout.SortOrder = Enum.SortOrder.LayoutOrder
     
-    nevermiss.ccLogo.Name = "nevermiss.ccLogo"
-    nevermiss.ccLogo.Parent = background
-    nevermiss.ccLogo.AnchorPoint = Vector2.new(0.5, 0.5)
-    nevermiss.ccLogo.BackgroundColor3 = Color3.fromRGB(255, 255, 255)
-    nevermiss.ccLogo.BackgroundTransparency = 1.000
-    nevermiss.ccLogo.Position = UDim2.new(0.5, 0, 0.5, 0)
-    nevermiss.ccLogo.Size = UDim2.new(0, 150, 0, 150)
-    nevermiss.ccLogo.Visible = true
-    nevermiss.ccLogo.Image = "http://www.roblox.com/asset/?id=9365069861"
-    nevermiss.ccLogo.ImageColor3 = Color3.fromRGB(159, 115, 255)
-    nevermiss.ccLogo.ImageTransparency = 1
+    hashnineLogo.Name = "hashnineLogo"
+    hashnineLogo.Parent = background
+    hashnineLogo.AnchorPoint = Vector2.new(0.5, 0.5)
+    hashnineLogo.BackgroundColor3 = Color3.fromRGB(255, 255, 255)
+    hashnineLogo.BackgroundTransparency = 1.000
+    hashnineLogo.Position = UDim2.new(0.5, 0, 0.5, 0)
+    hashnineLogo.Size = UDim2.new(0, 150, 0, 150)
+    hashnineLogo.Visible = true
+    hashnineLogo.Image = "http://www.roblox.com/asset/?id=9365069861"
+    hashnineLogo.ImageColor3 = Color3.fromRGB(159, 115, 255)
+    hashnineLogo.ImageTransparency = 1
     
     hashLogo.Name = "hashLogo"
     hashLogo.Parent = background
@@ -1079,16 +1079,16 @@ function library:Introduction()
     hashLogo.ImageColor3 = Color3.fromRGB(159, 115, 255)
     hashLogo.ImageTransparency = 1
     
-    nevermiss.cc.Name = "nevermiss.cc"
-    nevermiss.cc.Parent = background
-    nevermiss.cc.BackgroundColor3 = Color3.fromRGB(255, 255, 255)
-    nevermiss.cc.BackgroundTransparency = 1.000
-    nevermiss.cc.Size = UDim2.new(0, 88, 0, 21)
-    nevermiss.cc.Font = Enum.Font.SourceSansBold
-    nevermiss.cc.Text = "                 discord.gg/nevermiss.cc"
-    nevermiss.cc.TextColor3 = Color3.fromRGB(124, 124, 124)
-    nevermiss.cc.TextSize = 16
-    nevermiss.cc.TextTransparency = 1
+    hashnine.Name = "hashnine"
+    hashnine.Parent = background
+    hashnine.BackgroundColor3 = Color3.fromRGB(255, 255, 255)
+    hashnine.BackgroundTransparency = 1.000
+    hashnine.Size = UDim2.new(0, 88, 0, 21)
+    hashnine.Font = Enum.Font.SourceSansBold
+    hashnine.Text = "                 discord.gg/hashnine"
+    hashnine.TextColor3 = Color3.fromRGB(124, 124, 124)
+    hashnine.TextSize = 16
+    hashnine.TextTransparency = 1
     
     text.Name = "text"
     text.Parent = background
@@ -1109,12 +1109,12 @@ function library:Introduction()
     pageLayout.SortOrder = Enum.SortOrder.LayoutOrder
     pageLayout.VerticalAlignment = Enum.VerticalAlignment.Center
 
-    CreateTween("nevermiss.ccRotation", 0)
+    CreateTween("hashnineRotation", 0)
     local MinusAmount = 220
     coroutine.wrap(function()
         while wait() do
             MinusAmount = MinusAmount + 0.4
-            TweenService:Create(nevermiss.ccLogo, TweenTable["nevermiss.ccRotation"], {Rotation = nevermiss.ccLogo.Rotation - MinusAmount}):Play()
+            TweenService:Create(hashnineLogo, TweenTable["hashnineRotation"], {Rotation = hashnineLogo.Rotation - MinusAmount}):Play()
         end
     end)()
 
@@ -1123,12 +1123,12 @@ function library:Introduction()
     wait(.2)
     TweenService:Create(bar, TweenTable["introduction"], {Size = UDim2.new(0, 298, 0, 1)}):Play()
     wait(.2)
-    TweenService:Create(nevermiss.cc, TweenTable["introduction"], {TextTransparency = 0}):Play()
+    TweenService:Create(hashnine, TweenTable["introduction"], {TextTransparency = 0}):Play()
     TweenService:Create(text, TweenTable["introduction"], {TextTransparency = 0}):Play()
     wait(.3)
-    TweenService:Create(nevermiss.ccLogo, TweenTable["introduction"], {ImageTransparency = 0}):Play()
+    TweenService:Create(hashnineLogo, TweenTable["introduction"], {ImageTransparency = 0}):Play()
     wait(2)
-    TweenService:Create(nevermiss.ccLogo, TweenTable["introduction"], {ImageTransparency = 1}):Play()
+    TweenService:Create(hashnineLogo, TweenTable["introduction"], {ImageTransparency = 1}):Play()
     wait(.2)
     TweenService:Create(hashLogo, TweenTable["introduction"], {ImageTransparency = 0}):Play()
     wait(2)
@@ -1136,7 +1136,7 @@ function library:Introduction()
     wait(.1)
     TweenService:Create(text, TweenTable["introduction"], {TextTransparency = 1}):Play()
     wait(.1)
-    TweenService:Create(nevermiss.cc, TweenTable["introduction"], {TextTransparency = 1}):Play()
+    TweenService:Create(hashnine, TweenTable["introduction"], {TextTransparency = 1}):Play()
     wait(.1)
     TweenService:Create(bar, TweenTable["introduction"], {Size = UDim2.new(0, 0, 0, 1)}):Play()
     wait(.1)

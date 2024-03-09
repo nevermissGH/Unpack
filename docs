@@ -385,7 +385,7 @@ end
 
 local library = {
     version = "2.1.3",
-    title = title or "Jester " .. tostring(math.random(1,366)),
+    title = title or "nevermiss.cc " .. tostring(math.random(1,366)),
     fps = 0,
     rank = "private"
 }
@@ -507,7 +507,7 @@ function library:Watermark(text)
         end
     end
 
-    tetx = text or "Jester v2"
+    tetx = text or "nevermiss.cc v1"
 
     local watermark = Instance.new("ScreenGui")
     local watermarkPadding = Instance.new("UIPadding")
@@ -631,7 +631,7 @@ function library:Watermark(text)
 
     local WatermarkFunctions = {}
     function WatermarkFunctions:AddWatermark(text)
-        tetx = text or "Jester v2"
+        tetx = text or "nevermiss.cc v2"
 
         local edge = Instance.new("Frame")
         local edgeCorner = Instance.new("UICorner")
@@ -997,9 +997,9 @@ function library:Introduction()
     local bar = Instance.new("Frame")
     local barCorner = Instance.new("UICorner")
     local barLayout = Instance.new("UIListLayout")
-    local JesterLogo = Instance.new("ImageLabel")
+    local nevermiss.ccLogo = Instance.new("ImageLabel")
     local hashLogo = Instance.new("ImageLabel")
-    local Jester = Instance.new("TextLabel")
+    local nevermiss.cc = Instance.new("TextLabel")
     local text = Instance.new("TextLabel")
     local pageLayout = Instance.new("UIListLayout")
     
@@ -1055,17 +1055,17 @@ function library:Introduction()
     barLayout.HorizontalAlignment = Enum.HorizontalAlignment.Center
     barLayout.SortOrder = Enum.SortOrder.LayoutOrder
     
-    JesterLogo.Name = "JesterLogo"
-    JesterLogo.Parent = background
-    JesterLogo.AnchorPoint = Vector2.new(0.5, 0.5)
-    JesterLogo.BackgroundColor3 = Color3.fromRGB(255, 255, 255)
-    JesterLogo.BackgroundTransparency = 1.000
-    JesterLogo.Position = UDim2.new(0.5, 0, 0.5, 0)
-    JesterLogo.Size = UDim2.new(0, 150, 0, 150)
-    JesterLogo.Visible = true
-    JesterLogo.Image = "http://www.roblox.com/asset/?id=9365069861"
-    JesterLogo.ImageColor3 = Color3.fromRGB(159, 115, 255)
-    JesterLogo.ImageTransparency = 1
+    nevermiss.ccLogo.Name = "nevermiss.ccLogo"
+    nevermiss.ccLogo.Parent = background
+    nevermiss.ccLogo.AnchorPoint = Vector2.new(0.5, 0.5)
+    nevermiss.ccLogo.BackgroundColor3 = Color3.fromRGB(255, 255, 255)
+    nevermiss.ccLogo.BackgroundTransparency = 1.000
+    nevermiss.ccLogo.Position = UDim2.new(0.5, 0, 0.5, 0)
+    nevermiss.ccLogo.Size = UDim2.new(0, 150, 0, 150)
+    nevermiss.ccLogo.Visible = true
+    nevermiss.ccLogo.Image = "http://www.roblox.com/asset/?id=9365069861"
+    nevermiss.ccLogo.ImageColor3 = Color3.fromRGB(159, 115, 255)
+    nevermiss.ccLogo.ImageTransparency = 1
     
     hashLogo.Name = "hashLogo"
     hashLogo.Parent = background
@@ -1079,16 +1079,16 @@ function library:Introduction()
     hashLogo.ImageColor3 = Color3.fromRGB(159, 115, 255)
     hashLogo.ImageTransparency = 1
     
-    Jester.Name = "Jester"
-    Jester.Parent = background
-    Jester.BackgroundColor3 = Color3.fromRGB(255, 255, 255)
-    Jester.BackgroundTransparency = 1.000
-    Jester.Size = UDim2.new(0, 88, 0, 21)
-    Jester.Font = Enum.Font.SourceSansBold
-    Jester.Text = "                 discord.gg/Jester"
-    Jester.TextColor3 = Color3.fromRGB(124, 124, 124)
-    Jester.TextSize = 16
-    Jester.TextTransparency = 1
+    nevermiss.cc.Name = "nevermiss.cc"
+    nevermiss.cc.Parent = background
+    nevermiss.cc.BackgroundColor3 = Color3.fromRGB(255, 255, 255)
+    nevermiss.cc.BackgroundTransparency = 1.000
+    nevermiss.cc.Size = UDim2.new(0, 88, 0, 21)
+    nevermiss.cc.Font = Enum.Font.SourceSansBold
+    nevermiss.cc.Text = "                 discord.gg/nevermiss.cc"
+    nevermiss.cc.TextColor3 = Color3.fromRGB(124, 124, 124)
+    nevermiss.cc.TextSize = 16
+    nevermiss.cc.TextTransparency = 1
     
     text.Name = "text"
     text.Parent = background
@@ -1109,12 +1109,12 @@ function library:Introduction()
     pageLayout.SortOrder = Enum.SortOrder.LayoutOrder
     pageLayout.VerticalAlignment = Enum.VerticalAlignment.Center
 
-    CreateTween("JesterRotation", 0)
+    CreateTween("nevermiss.ccRotation", 0)
     local MinusAmount = 220
     coroutine.wrap(function()
         while wait() do
             MinusAmount = MinusAmount + 0.4
-            TweenService:Create(JesterLogo, TweenTable["JesterRotation"], {Rotation = JesterLogo.Rotation - MinusAmount}):Play()
+            TweenService:Create(nevermiss.ccLogo, TweenTable["nevermiss.ccRotation"], {Rotation = nevermiss.ccLogo.Rotation - MinusAmount}):Play()
         end
     end)()
 
@@ -1123,12 +1123,12 @@ function library:Introduction()
     wait(.2)
     TweenService:Create(bar, TweenTable["introduction"], {Size = UDim2.new(0, 298, 0, 1)}):Play()
     wait(.2)
-    TweenService:Create(Jester, TweenTable["introduction"], {TextTransparency = 0}):Play()
+    TweenService:Create(nevermiss.cc, TweenTable["introduction"], {TextTransparency = 0}):Play()
     TweenService:Create(text, TweenTable["introduction"], {TextTransparency = 0}):Play()
     wait(.3)
-    TweenService:Create(JesterLogo, TweenTable["introduction"], {ImageTransparency = 0}):Play()
+    TweenService:Create(nevermiss.ccLogo, TweenTable["introduction"], {ImageTransparency = 0}):Play()
     wait(2)
-    TweenService:Create(JesterLogo, TweenTable["introduction"], {ImageTransparency = 1}):Play()
+    TweenService:Create(nevermiss.ccLogo, TweenTable["introduction"], {ImageTransparency = 1}):Play()
     wait(.2)
     TweenService:Create(hashLogo, TweenTable["introduction"], {ImageTransparency = 0}):Play()
     wait(2)
@@ -1136,7 +1136,7 @@ function library:Introduction()
     wait(.1)
     TweenService:Create(text, TweenTable["introduction"], {TextTransparency = 1}):Play()
     wait(.1)
-    TweenService:Create(Jester, TweenTable["introduction"], {TextTransparency = 1}):Play()
+    TweenService:Create(nevermiss.cc, TweenTable["introduction"], {TextTransparency = 1}):Play()
     wait(.1)
     TweenService:Create(bar, TweenTable["introduction"], {Size = UDim2.new(0, 0, 0, 1)}):Play()
     wait(.1)
